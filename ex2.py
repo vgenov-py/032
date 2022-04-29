@@ -38,13 +38,54 @@ names = ["paula", "maría", "andrea", "carla", "carlos"]
 while + condición que no supere el indice de la lista + método string + condicional
 '''
 
-counter = 0
-while counter <= 20:
-    print(counter)
-    counter += 2
+# counter = 0
+# while counter <= 20:
+#     print(counter)
+#     counter += 2
 
-counter = 1
-while counter <= 20:
-    if counter % 2 == 0:
-        print(counter)
-    counter += 1
+# counter = 1
+# while counter <= 20:
+#     if counter % 2 == 0:
+#         print(counter)
+#     counter += 1
+
+
+names = ["paula", "maría", "andrea", "Carla", "carlos"]
+count = 0
+while count < len(names):
+    name = names[count]
+    if name[0] == "c":
+        print(name)
+    name.startswith("c")
+    name.find("c", 0, 1) == 0
+    count += 1
+
+# counter = 0
+# while counter < len(names):
+#     name = names[counter]
+#     f_letter = name[0]
+#     if f_letter == "c" or f_letter == "C":
+#         print(name)
+#     counter += 1
+#     '''
+#     if names[counter].startswith("c"):
+#         print(names[counter])
+#     '''
+
+# counter = 0
+# while counter < len(names):
+#     if names[counter][0].upper() == "C":
+#         print(names[counter])
+#     counter += 1
+
+a = "murcielago"
+i = 0
+vowels = ["a", "e", "i", "o", "u"]
+
+while i < len(vowels):
+    po = i + 1
+    a = a.replace(vowels[i], str(2**(po)))
+    i += 1
+    
+
+print(a)
