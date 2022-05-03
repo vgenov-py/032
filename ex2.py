@@ -51,14 +51,14 @@ while + condición que no supere el indice de la lista + método string + condic
 
 
 names = ["paula", "maría", "andrea", "Carla", "carlos"]
-count = 0
-while count < len(names):
-    name = names[count]
-    if name[0] == "c":
-        print(name)
-    name.startswith("c")
-    name.find("c", 0, 1) == 0
-    count += 1
+# count = 0
+# while count < len(names):
+#     name = names[count]
+#     if name[0] == "c":
+#         print(name)
+#     name.startswith("c")
+#     name.find("c", 0, 1) == 0
+#     count += 1
 
 # counter = 0
 # while counter < len(names):
@@ -82,10 +82,16 @@ a = "murcielago"
 i = 0
 vowels = ["a", "e", "i", "o", "u"]
 
-while i < len(vowels):
-    po = i + 1
-    a = a.replace(vowels[i], str(2**(po)))
-    i += 1
-    
+'''
+a: 2
+e: 4
+...32
+'''
 
-print(a)
+# while i < len(vowels):
+#     po = i + 1
+#     a = a.replace(vowels[i], str(2**(po))) # ^
+#     i += 1
+    
+# print(a)
+
