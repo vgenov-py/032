@@ -48,16 +48,22 @@ I: {i}, V: {v}
 '''
 
 
+from enum import unique
+import re
+
+
 a = [5,6,7,8]    
 lista_de_cuadrados = [None, None, None, None]
 for i, num in enumerate(a):
     lista_de_cuadrados[i] = num ** 2
 # print(lista_de_cuadrados)
 for i, num in enumerate(lista_de_cuadrados):
-    print(f"I: {i}, V: {num}")
+    # print(f"I: {i}, V: {num}")
+    pass
 
 # simular count 
 fruits = ['apple', 'banana', 'cherry', "apple"]
+fruits.count("apple") # --> 2
 
 count = 0
 search_term = "apple"
@@ -66,3 +72,50 @@ for element in fruits:
         count += 1
 
 print(count)
+
+# simular index
+# un elemento a buscar y debemos devolver su posición (int)
+# debemos usar un for
+
+fruits = ['apple', 'banana', 'cherry', "apple"]
+search_term = "apple"
+# print(list(enumerate(fruits)))
+
+# enumerate_fruits = []
+# i = 0
+# for element in fruits:
+#     enumerate_fruits.append((i, element))
+#     i += 1
+
+# print(enumerate_fruits)
+'''
+continue
+break
+pass
+'''
+
+if 1 == 1:
+    pass
+
+for i, element in enumerate(fruits):
+    if element == search_term:
+        pos = i
+        break
+ 
+        # continue
+
+# print(f"La posición de {search_term} es {pos}")
+# print(f"El método index dice que la posición de {search_term} es {fruits.index(search_term)}")
+
+repeated_numbers = [1,2,2,10,11,13,2,8,9,16,26,50,51,56,89,150,2,3,6,7,67,98, 891]
+unique_numbers = set(repeated_numbers)
+print(repeated_numbers)
+print(unique_numbers)
+
+
+unique_numbers_2 = []
+
+for num in repeated_numbers:
+    if not num in unique_numbers_2:
+        unique_numbers_2.append(num)
+# print(unique_numbers_2)
