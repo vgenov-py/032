@@ -104,5 +104,58 @@ for student in students:
             best_grade_students.append(student)
         grade = student["score"]
 
+# print(best_grade_students)
 
-print(best_grade_students)
+to_change_grade = "Alicia"
+
+for student in m_course:
+    student["id"] = "M" + student["id"]
+
+for student in a_course:
+    student["id"] = "A" + student["id"]
+# print(m_course)
+
+approved = [student for student in students if student["score"]>=6]
+# print(approved)
+suspended = [student for student in students if student["score"]<6]
+# print(suspended)
+approved.clear()
+suspended.clear()
+for student in students:
+    if student["score"] >= 6:
+        approved.append(student)
+    else:
+        suspended.append(student)
+
+
+to_keys = ["A", "B", "C", "D"]
+to_values = [1,2,3,4]
+new_dict = {}
+
+for i,v in enumerate(to_values):
+    new_dict[to_keys[i]] = v
+
+# print(new_dict)
+
+i = 0
+for k in to_keys:
+    # new_dict[k] = to_values[i]
+    # i += 1
+    new_dict[k] = to_values[to_keys.index(k)]
+
+for k,v in zip(to_keys, to_values):
+    new_dict[k] = v
+# [__ for __ in __]
+#   v      v    iterable
+{}
+# {k:v for (k,v) in dict.items()}
+a = {"A": 2}
+b = {k:v ** 2 for (k,v) in a.items()}
+print(a)
+print(b)
+
+new_dict = {k:v for (k,v) in zip(to_keys, to_values)}
+print(new_dict)
+
+
+
