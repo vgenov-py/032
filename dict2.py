@@ -1,3 +1,5 @@
+
+
 m_course = [
     {
 	"name": "Patricia",
@@ -108,11 +110,12 @@ for student in students:
 
 to_change_grade = "Alicia"
 
-for student in m_course:
-    student["id"] = "M" + student["id"]
+# for student in m_course:
+#     student["id"] = "M" + student["id"]
 
-for student in a_course:
-    student["id"] = "A" + student["id"]
+# for student in a_course:
+#     student["id"] = "A" + student["id"]
+
 # print(m_course)
 
 approved = [student for student in students if student["score"]>=6]
@@ -151,11 +154,41 @@ for k,v in zip(to_keys, to_values):
 # {k:v for (k,v) in dict.items()}
 a = {"A": 2}
 b = {k:v ** 2 for (k,v) in a.items()}
-print(a)
-print(b)
+# print(a)
+# print(b)
 
 new_dict = {k:v for (k,v) in zip(to_keys, to_values)}
-print(new_dict)
+# print(new_dict)
 
 
+# print(f"Íñtimo: {dict(zip(to_keys, to_values))}")
+# print(list(new_dict))
 
+# search_by_name(name), change_id(course, letter), create_dict(lista_keys, lista_values)
+
+def search_by_name(name, course): # 
+    for student in course: # 
+        if student["name"].lower() == name:
+            return student
+    return False
+
+# print(m_course) 
+def change_id(course, letter):
+    for student in course:
+        student["id"] = letter.upper() + student["id"]
+
+change_id(m_course, "M")
+print(m_course)
+
+def create_dict(lista_keys, lista_values):
+    return dict(zip(lista_keys, lista_values))
+    dict_to_return = {}
+    for i,v in enumerate(lista_values):
+        dict_to_return[lista_keys[i]] = v
+    return dict_to_return
+
+
+a = ["A", "B"]
+b = ["I", "II"]
+
+dict_ab = create_dict(a,b)
