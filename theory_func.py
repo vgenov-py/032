@@ -53,3 +53,24 @@ def add(x, y):
     result =  x + y
     return result
 
+def sumar():
+    print( 1 + 1)
+
+def sumar_2():
+    return 1 + 1
+
+# a = sumar()
+# print(a)
+
+a = sumar_2()
+# print(a)
+stock = ["intenso", "ristretto"]
+def nespresso(cap_space):
+    temp = 80
+    return f"Café {cap_space} recién hecho a {temp} grados"
+
+# print(nespresso("de la India"))
+# print("Fin")
+
+data = ["cosas"]
+
