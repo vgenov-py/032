@@ -1,3 +1,4 @@
+
 user = ""
 
 DB = [{
@@ -21,8 +22,8 @@ DB = [{
 {
     "id": "dc_1",
     "title": "El error de Descartes",
-    "author": "Antonio Damasio",
-    "genre": "Divulgación científica"
+    "genre": "Divulgación científica",
+    "author": "Antonio Damasio"
 },
 {
     "id": "dc_2",
@@ -33,7 +34,7 @@ DB = [{
 {
     "id": "ne_1",
     "title": "El corazón de las tinieblas",
-    "author": "Joseph Conrad",
+    "author": "Jack London",
     "genre": "Narrativa extranjera"
 },
 {
@@ -62,7 +63,7 @@ DB = [{
 },
 ]
 
-genre = ["Narrativa extranjera", "Divulgación científica", "Narativa policíaca", "Ciencia ficción", "Autoayuda"]
+genres = ["Narrativa extranjera", "Divulgación científica", "Narativa policíaca", "Ciencia ficción", "Autoayuda"]
 
 def menu():
     print("Bienvenido a bookshop")
@@ -73,22 +74,42 @@ def menu():
     print("q. para salir")
 
 def get_by_id(book_id):
-    book_id = input("id: ")
     for book in DB:
         if book["id"] == book_id:
             return book
-    else:
-        print("No hemos encontrado nada")
+
+# Búsqueda relativa
+# Retornar lista
+# insensitive /i
+
+def get_by_param(user_input, book_param): # author, title, genre LO QUE EL USUARIO DIGA
+    result = []
+    user_input = user_input.lower()
+    for book in DB:
+        if book[book_param].lower().find(user_input) >= 0:
+            result.append(book)
+    return result
+
+'''
+1. usuario elige una opción
+2. uso get_by_param con lo que el usuario me diga
+
+# género
+
+1. usuario elige una opción
+2. listo los géneros
+3. extraigo el género que el usuario haya indicado
+4. uso get_by_param con lo que el usuario me diga 
+'''
+
+# WET & DRY 
+# Write Everythin Twice
+# Don't Repeat Yourself
+
 
 def pretty_book(book):
     for k,v in book.items():
         print(f"{k}: {v}")
-
-def not_found(element):
-    if element:
-        pretty_book(element)
-    else:
-        print(f"No hemos encontrado nada")
 
 ####### UI/UX:
 
@@ -99,8 +120,31 @@ while user != "q":
     if user == "1":
         book_id = input("id: ")
         book = get_by_id(book_id)
-        not_found(book)
-        
+        if book:
+            pretty_book(book)
+        else:
+            print(f"No hemos encontrado el libro por el ID: {book_id}")
+        input(": ")
+    
+    elif user == "2":
+        book_author = input("Author: ")
+        books = get_by_param(book_author, "author")
+        for book in books:
+            pretty_book(book)
+            
+            input("\nSiguiente\n")
+    
+    elif user == "3":
+        book_title = input("Title: ")
+        books = get_by_param(book_title, "title")
+        for book in books:
+            pretty_book(book)         
+            input("\nSiguiente\n")
+    
+    elif user == "4":
+        for i, genre in enumerate(genres): # 
+            print(f"{i + 1}. {genre}")
+        user = int(input(": ")) - 1
+        print(genres[user]) # utilicen la función get_by_param 
         input()
 
-        
