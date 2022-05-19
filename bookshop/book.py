@@ -82,6 +82,11 @@ def get_by_id(book_id):
 # Retornar lista
 # insensitive /i
 
+
+def pretty_book(book):
+    for k,v in book.items():
+        print(f"{k}: {v}")
+
 def get_by_param(user_input, book_param): # author, title, genre LO QUE EL USUARIO DIGA
     result = []
     user_input = user_input.lower()
@@ -89,6 +94,14 @@ def get_by_param(user_input, book_param): # author, title, genre LO QUE EL USUAR
         if book[book_param].lower().find(user_input) >= 0:
             result.append(book)
     return result
+
+def user_option(msg, book_param):
+            book_author = input(msg)
+            books = get_by_param(book_author, book_param)
+            for book in books:
+                pretty_book(book)
+                
+                input("\nSiguiente\n")
 
 '''
 1. usuario elige una opción
@@ -107,9 +120,6 @@ def get_by_param(user_input, book_param): # author, title, genre LO QUE EL USUAR
 # Don't Repeat Yourself
 
 
-def pretty_book(book):
-    for k,v in book.items():
-        print(f"{k}: {v}")
 
 ####### UI/UX:
 
@@ -127,24 +137,17 @@ while user != "q":
         input(": ")
     
     elif user == "2":
-        book_author = input("Author: ")
-        books = get_by_param(book_author, "author")
-        for book in books:
-            pretty_book(book)
-            
-            input("\nSiguiente\n")
+        user_option("Author: ", "author")
     
     elif user == "3":
-        book_title = input("Title: ")
-        books = get_by_param(book_title, "title")
-        for book in books:
-            pretty_book(book)         
-            input("\nSiguiente\n")
-    
+        user_option("Title: ", "title")
+        
     elif user == "4":
         for i, genre in enumerate(genres): # 
             print(f"{i + 1}. {genre}")
         user = int(input(": ")) - 1
-        print(genres[user]) # utilicen la función get_by_param 
-        input()
+        books = get_by_param(genres[user], "genre")
+        for book in books:
+            pretty_book(book)         
+            input("\nSiguiente\n")
 
