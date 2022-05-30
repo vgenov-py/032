@@ -59,7 +59,8 @@ DB = [{
     "id": "aa_1",
     "title": "El poder del ahora",
     "author": "Ekhart Tolle",
-    "genre": "Narrativa extranjera"
+    "genre": "Narrativa extranjera",
+    "ISBN": "978810392812"
 },
 ]
 
@@ -71,6 +72,9 @@ def menu():
     print("2. Buscar por Autor")
     print("3. Buscar por Título")
     print("4. Buscar por Materia")
+    print("5. Eliminar libro por ID")
+    print("6. Actualizar libro por ID")
+
     print("q. para salir")
 
 def get_by_id(book_id):
@@ -78,6 +82,8 @@ def get_by_id(book_id):
         if book["id"] == book_id:
             return book
 
+    # un comentario
+    # otro comentario
 # Búsqueda relativa
 # Retornar lista
 # insensitive /i
@@ -96,12 +102,12 @@ def get_by_param(user_input, book_param): # author, title, genre LO QUE EL USUAR
     return result
 
 def user_option(msg, book_param):
-            book_author = input(msg)
-            books = get_by_param(book_author, book_param)
-            for book in books:
-                pretty_book(book)
-                
-                input("\nSiguiente\n")
+    user_input = input(msg)
+    books = get_by_param(user_input, book_param)
+    for book in books:
+        pretty_book(book)
+        
+        input("\nSiguiente\n")
 
 '''
 1. usuario elige una opción
@@ -113,6 +119,14 @@ def user_option(msg, book_param):
 2. listo los géneros
 3. extraigo el género que el usuario haya indicado
 4. uso get_by_param con lo que el usuario me diga 
+
+
+CREATE
+READ
+UPDATE
+DELETE
+
+
 '''
 
 # WET & DRY 
@@ -135,7 +149,7 @@ while user != "q":
         else:
             print(f"No hemos encontrado el libro por el ID: {book_id}")
         input(": ")
-    
+
     elif user == "2":
         user_option("Author: ", "author")
     
@@ -151,3 +165,33 @@ while user != "q":
             pretty_book(book)         
             input("\nSiguiente\n")
 
+    elif user == "5":
+        book_id = input("ID: ")
+        # book_to_delete = get_by_id(book_id)
+        # if book_to_delete:
+        #     DB.remove(book_to_delete)
+        #     print(f"El libro '{book_to_delete['title']}' ha sido eliminado")
+        # else:
+        #     print(f"No hemos encontrado el libro por ID: {book_id}")
+        # input(": ")
+        '''
+        ALTERNATIVA get_by_param():
+        '''
+        book_to_delete = get_by_param(book_id, "id")
+        if len(book_to_delete) == 1:
+            book_to_delete = book_to_delete[0]
+            DB.remove(book_to_delete) # DB.pop(DB.index(book_to_delete))            
+            print(f"El libro '{book_to_delete['title']}' ha sido eliminado")
+        else:
+            print(f"No hemos encontrado el libro por ID: {book_id}")
+        input(": ")
+        
+    elif user == "6":
+        book_id = input("ID: ")
+        book_to_update = get_by_id(book_id)
+        pretty_book(book_to_update)
+        if book_to_update:
+            for k,v in tuple(book_to_update.items())[1:]: # Big O notation O(6) == O(1)
+                new_v = input(f"New {k} ({v}): ")
+                if new_v:
+                    book_to_update[k] = new_v                
