@@ -77,7 +77,7 @@ def menu():
 
     print("q. para salir")
 
-def get_by_id(book_id): 
+def get_by_id(book_id):
     for book in DB:
         if book["id"] == book_id:
             return book
