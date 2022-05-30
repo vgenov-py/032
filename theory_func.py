@@ -74,3 +74,20 @@ def nespresso(cap_space):
 
 data = ["cosas"]
 
+a = {"a": 2}
+c = 3
+def b(a):
+    c
+    return a
+
+b(a)
+# print(a)
+
+def add(a,b):
+    return a + b
+
+
+def concatenar(a, b):
+    return add(a,b)
+
+print(concatenar("a","b"))
