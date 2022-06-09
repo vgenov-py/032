@@ -170,5 +170,61 @@ b = list(map(double,a))
 
 values = [1,2,3,4]
 
-result = list(map(lambda num: num %2 == 0,values))
-print(result)
+result = list(filter(lambda num: num %2 == 0, values))
+# print(result)
+
+def a(data):
+    result = []
+    for num in data:
+        if num %2 == 0:
+            result.append(num)
+    return result
+
+values = [1,2,3,4]
+
+def b(num):
+    return num %2 == 0
+result = list(filter(b, values))
+# print(result)
+
+genre_dc = filter(lambda book: book["genre"] == "Divulgación científica",DB)
+# print(list(genre_dc))
+
+result = []
+for book in genre_dc:
+    result.append(book)
+
+values = [1,2,3,4,5,6,7,9]
+
+# Comprobación de Rubén:
+
+filter_values = filter(lambda num: num %2 != 0, values)
+# [1,3]
+# print(list(filter_values))
+# [3]
+
+# print(tuple(zip((1,2,3,4), ("a", "b", "c", "d", "e"))))
+a = (1,2,3,4)
+b = ("a", "b", "c", "d", "e")
+# print(list(map(lambda num1, num2: (num1, num2),a,b)))
+
+
+values = [1,2,3,4,5,6,7,9]
+# elevar al cuadrado los números pares map + filter
+# print(list(map(lambda num: num ** 2, filter(lambda num: num % 2 == 0, values))))
+
+[num ** 2 for num in filter(lambda num: num % 2 == 0, values)]
+[num ** 2 for num in values if num % 2 == 0]
+
+# <=
+values = [1,2,3,4,5,6,7,9]
+
+# print(sorted(values, reverse=True))
+
+values = {k:k ** 2 for k in values}
+
+values_dict = [{"name": "Vito", "antiguedad": 2}, {"name": "Alvaro", "antiguedad": 1}, {"name": "Candela", "antiguedad": 3}]
+
+print(sorted(values_dict, key=lambda partner: partner["name"]))
+
+map(lambda partner: partner["antiguedad"] ,values_dict)
