@@ -1,10 +1,13 @@
 import requests as req
 import matplotlib.pyplot as plt
+import json
 
 url = "https://datos.comunidad.madrid/catalogo/dataset/032474a0-bf11-4465-bb92-392052962866/resource/301aed82-339b-4005-ab20-06db41ee7017/download/municipio_comunidad_madrid.json"
 
 res = req.get(url).json() # dict key data: [list]:[dict]
 data = res["data"]
+with open("data.json", "w", encoding="utf8") as file:
+    json.dump(res, file, ensure_ascii=False, indent=4)
 
 def get_by_ine(mun_ine):
     for mun in data:

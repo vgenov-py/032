@@ -1,4 +1,5 @@
 import csv
+import json
 user = ""
 
 DB = [{
@@ -203,10 +204,14 @@ while user != "q":
         # file.writelines([f"{str(book)}\n" for book in DB])
         # file.close()
         # print("Back up realizado!")
-        file = open("backup.csv", "w")
-        csv_writer = csv.writer(file)
+        file = open("backup.csv", "w", newline="")
+        csv_writer = csv.writer(file, delimiter=";")
         csv_writer.writerow(DB[0].keys())
         csv_writer.writerows([book.values() for book in DB])
         file.close()
         print("Back up realizado!")
         input(": ")
+    
+    elif user == "8":
+        with open("backup.json", "w", encoding="utf8") as file:
+            json.dump({"data": DB}, file, indent=4, ensure_ascii=False)
