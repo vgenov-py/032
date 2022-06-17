@@ -225,6 +225,79 @@ values = {k:k ** 2 for k in values}
 
 values_dict = [{"name": "Vito", "antiguedad": 2}, {"name": "Alvaro", "antiguedad": 1}, {"name": "Candela", "antiguedad": 3}]
 
-print(sorted(values_dict, key=lambda partner: partner["name"]))
+# print(sorted(values_dict, key=lambda partner: partner["name"]))
 
 map(lambda partner: partner["antiguedad"] ,values_dict)
+
+# _true_result_ if _condition_ else _false_result_
+
+age = 65
+# 18 >= adult
+carnet = "carnet mayor" if age >= 65 else "carnet adulto" if age >= 26 else "carnet joven"
+# result_1 | result_2
+# print(carnet)
+
+a = [1,2,3,4]
+# __ for __ in __s
+# print([num**2 if num % 2 == 0 else None for num in a])
+
+map(lambda num: num ** 2 if num % 2 == 0 else num ** 3,a)
+#args & kwargs | default
+
+def add(num_type,*args):
+    result = sum(args)
+    if num_type == "int":
+        return int(result)
+    else:
+        return float(result)
+
+def add_2(x, y, is_int=True):
+    if is_int:
+        return int(x + y)
+    else:
+        return float(x + y)
+
+def add_3(x,y,**kwargs):
+    if kwargs.get("is_int"):
+        print (int(x + y))
+
+a = [1,2,3,4,6]
+b = zip(a,a)
+c = enumerate(a)
+d = filter(lambda num: num % 2 == 0, a)
+
+'''
+1. un bucle: todo elemento de a es pasado como argumento al parámetro num / for
+2. se ejecuta la función / ()
+3. se retornan los valores / return
+4. if statement
+5. se guardan en un iterable / append
+'''
+
+def my_filter(func, array, key=False):
+    for element in array:
+        if func(element):
+            yield element
+
+def x(num):
+    if num % 2 == 0:
+        if num > 3:
+            if num > 5:
+                return num ** 0.5
+
+e = my_filter(x, a)
+# print(list(e))
+
+def my_map(func, *args):
+    for element in zip(*args):
+        yield func(*element)
+
+my_m = map(x, a)
+
+print(next(element for element in a))
+(element for element in a)
+[element for element in a]
+
+def add(x: int, y: int) -> int:
+    if type(x) !=  int or type(y) !=  int:
+        raise TypeError(f"{x} and {y} must be integers")

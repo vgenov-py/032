@@ -9,10 +9,22 @@ data = res["data"]
 with open("data.json", "w", encoding="utf8") as file:
     json.dump(res, file, ensure_ascii=False, indent=4)
 
-def get_by_ine(mun_ine):
-    for mun in data:
+def get_by_ine(mun_ine, dataset):
+    for mun in dataset:
         if mun["municipio_codigo_ine"] == mun_ine:
             return mun
+
+def get_bigger_than(sup):
+    return filter(lambda mun: mun["superficie_km2"] >= sup,data)
+
+get_bigger_than(100)
+
+def get_bigger_than_2(sup):
+    result = []
+    for mun in data:
+        if mun["superficie_km2"] >= sup:
+            result.append(mun)
+    return result
 
 def get_biggest():
     biggest_mun = None
@@ -22,6 +34,11 @@ def get_biggest():
             top_area = mun["superficie_km2"]
             biggest_mun = mun
     return biggest_mun
+
+def get_key(mun):
+    return mun["densidad_por_km2"]
+
+print(sorted(data, reverse=True, key=get_key)[0:5])
 
 # print(get_biggest())
 
@@ -41,7 +58,8 @@ def popu_func():
     for mun in data:
         result += mun["superficie_km2"] * mun["densidad_por_km2"]
     return result
-print(popu_func()/len(data))
+# print(sum(map(lambda mun: mun["superficie_km2"] * mun["densidad_por_km2"],data)))
+# print(popu_func()/len(data))
 
 # result = 0
 # for mun in data:
