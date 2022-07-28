@@ -6,7 +6,7 @@ import os
 
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET"] = "KUGA"
+    app.config["SECRET_KEY"] = "KUGA"
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
     app.register_blueprint(api, url_prefix="/api")
     app.register_blueprint(web)
