@@ -10,6 +10,12 @@ class Apartment(db.Model):
     roomies = db.relationship('Roomie', backref='apartments', lazy=True)
     invoices = db.relationship('Invoice', backref='apartments', lazy=True)
 
+    @staticmethod
+    def gen_id():
+        return uuid4().hex
+
+    def add_apartment(address: str, rooms: int):  
+        return Apartment(id=Apartment.gen_id(), address=address, rooms=rooms)
 
 class Roomie(db.Model):
     __tablename__ = "roomies"
@@ -30,13 +36,7 @@ class Roomie(db.Model):
         default is_keeper=False
         '''
         user_id = uuid4().hex
-        name = name
-        email = email
-        pwd = pwd
-        is_keeper = is_keeper
         debt = 0
-        date_start = date_start
-        date_end = date_end
         return Roomie(id=user_id, name=name, email=email, pwd=pwd, is_keeper=is_keeper, debt=debt, date_start=date_start, date_end=date_end)
 
 class Invoice(db.Model):

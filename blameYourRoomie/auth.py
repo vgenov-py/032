@@ -1,6 +1,7 @@
 from flask import redirect, url_for
 from functools import wraps
 from secrets import token_urlsafe
+
 class Auth:
     def __init__(self, session, users, redirect_url, home_url,request, db) -> None:
         self.session = session
