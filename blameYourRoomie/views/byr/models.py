@@ -30,14 +30,20 @@ class Roomie(db.Model):
     date_start = db.Column(db.Date)
     date_end = db.Column(db.Date)
 
-    def add_roomie(name, email, pwd, date_start, date_end,is_keeper=False):
+    def add_roomie(name, email, pwd, date_start, date_end,is_keeper=False, apartment_id = None):
         '''
         debt=0
         default is_keeper=False
         '''
         user_id = uuid4().hex
         debt = 0
-        return Roomie(id=user_id, name=name, email=email, pwd=pwd, is_keeper=is_keeper, debt=debt, date_start=date_start, date_end=date_end)
+        return Roomie(id=user_id, name=name, apartment_id = apartment_id, email=email, pwd=pwd, is_keeper=is_keeper, debt=debt, date_start=date_start, date_end=date_end)
+
+    def __repr__(self):
+        return f"Roomie({self.name})"
+    
+    def __str__(self):
+        return f"Roomie({self.name})"
 
 class Invoice(db.Model):
     __tablename__ = "invoices"

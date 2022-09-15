@@ -9,6 +9,8 @@ test_auth = Auth(session, Roomie, "byr.t_login", "byr.home",  request, db)
 @byr.route("/", methods=["GET", "POST"])
 @test_auth.auth
 def home():
+    if session.get("apartment_id"):
+        return redirect(url_for("byr.t_apartment"))
     return render_template("base.html")
 
 @byr.route("/login", methods=["GET", "POST"])
@@ -19,6 +21,7 @@ def t_login():
 @byr.route("/apartment", methods=["GET", "POST"])
 @test_auth.auth
 def t_apartment():
+    apartment = Apartment.query.filter_by(id=session.get("apartment_id")).first()
     if request.method == "POST":
         form_address = request.form["address"]
         form_rooms = request.form["rooms"]
@@ -30,14 +33,42 @@ def t_apartment():
         db.session.commit()
         return redirect(url_for("byr.home"))
 
-    return render_template("apartment.html")
+    return render_template("apartment.html", apartment=apartment if apartment else None)
+
+@byr.route("/roomies", methods=["GET", "POST"])
+@test_auth.auth
+def t_roomies():
+    if request.method == "POST":
+        form = request.form
+        new_roomie = Roomie.add_roomie(
+            form["name"], 
+            form["email"], 
+            form["email"], 
+            dt.date.fromisoformat(form["date_start"]),
+            dt.date.fromisoformat(form["date_end"]) if form["date_end"] else None,
+            apartment_id=session["apartment_id"]
+            )
+
+        db.session.add(new_roomie)
+        db.session.commit()
+
+    apartment = Apartment.query.filter_by(id=session.get("apartment_id")).first()
+    roomies = apartment.roomies
+    return render_template("roomies.html", roomies=roomies)
 
 @byr.route("/test")
 def t_test():
-    print(test_auth.session)
+    roomies = Roomie.query.all()
+    print(roomies)
+    # print(test_auth.session)
     # to_add = Roomie.add_roomie(
-    #     "test","test@email.com", "1234", dt.date.fromisoformat("2022-01-01"), dt.date.fromisoformat("2022-01-31")
+    #     "test3","test3@email.com", "1234", dt.date.fromisoformat("2022-01-01"), None
     #     )
     # db.session.add(to_add)
     # db.session.commit()
     return "Testing"
+
+@byr.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('byr.t_login'))

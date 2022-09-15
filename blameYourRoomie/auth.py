@@ -10,7 +10,7 @@ class Auth:
         self.home_url = home_url
         self.request = request
         self.db = db
-    
+
     def auth(self, func):
         @wraps(func)
         def inner(*args):
@@ -24,7 +24,7 @@ class Auth:
             return redirect(url_for(self.redirect_url))
         return inner
 
-    def check(self, func):
+    def check(self, func): # SESSION LOG OUT
         @wraps(func)
         def inner(*args):
             if self.request.method == "POST":
@@ -36,6 +36,8 @@ class Auth:
                         user.token = token_urlsafe()
                         self.session["id"] = user.id
                         self.session["token"] = user.token
+                        self.session["apartment_id"] = user.apartment_id if user.apartment_id else None
+
                         self.db.session.add(user)
                         self.db.session.commit()
                         return redirect(url_for(self.home_url))

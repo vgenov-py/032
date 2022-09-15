@@ -1,0 +1,105 @@
+{%extends "base.html"%}
+
+{%block main%}
+<div class="fixed-top mt-5">
+    <div class="d-flex justify-content-end mt-5 me-5">
+        <button type="button" class="btn btn-success rounded-pill" onclick="show_form_roomie()">
+            <svg id="svg_add" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"></path>
+        </svg>
+
+        <svg style="display: none;" id="svg_people" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"></path>
+          </svg>
+
+        </button>
+    </div>
+</div>
+<!-- VITO GENOVESE -->
+
+<table class="table text-light" style="width: 80%;" id="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">In</th>
+        <th scope="col">Out</th>
+      </tr>
+    </thead>
+    <tbody>
+{%for roomie in roomies%}
+      <tr>
+        <th scope="row">{{roomie.name}}</th>
+        <td>{{roomie.email}}</td>
+        <td>{{roomie.date_start}}</td>
+        <td>{{roomie.date_end}}</td>
+      </tr>
+{%endfor%}
+    </tbody>
+</table>
+<form id="form"  style="display: none;" class="text-light" method="post">
+    <div class="mb-2">
+        <label for="exampleInputEmail1" class="form-label">Name</label>
+        <input type="name" class="form-control" name="name" aria-describedby="textHelp" required>
+    </div>
+    <div class="mb-2"> <label for="exampleInputEmail1" class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" aria-describedby="emailHelp" required>
+    </div>
+    <div class="mb-2">
+        <label for="exampleInputEmail1" class="form-label">Checkin</label>
+        <input type="date" class="form-control" name="date_start" aria-describedby="dateHelp" required>
+    </div>
+    <div class="mb-2">
+        <input type="checkbox" class="form-check-input" name="is_alive" id="is_alive" aria-describedby="dateHelp" onclick="show_checkout()">
+        <label for="exampleInputEmail1" class="form-check-label">Is gone?</label>
+    </div>
+    <div class="mb-3" id="div_checkout" style="display: none;">
+        <label for="exampleInputEmail1" class="form-label">Checkout</label>
+        <input type="date" class="form-control" name="date_end" id="checkout" aria-describedby="dateHelp">
+    </div>
+    <button type="submit" class="btn btn-success">Add!</button>
+</form>
+<script>
+    const checkbox = document.querySelector("#is_alive");
+    checkbox.checked = false;
+    function show_form_roomie() {
+        const table = document.querySelector("#table");
+        const form = document.querySelector("#form");
+        const svg_add = document.querySelector("#svg_add");
+        const svg_people = document.querySelector("#svg_people");
+        if (svg_people.style.display=="none") {
+            svg_add.style.display = "none";
+            svg_people.style.display = "block";
+            table.style.display = "none";
+            form.style.display = "block";
+        }
+        else {
+            svg_add.style.display = "block";
+            svg_people.style.display = "none";
+            table.style.display = "table";
+            form.style.display = "none";
+        }
+        ;
+        
+    };
+
+    function show_checkout() {
+
+        const div_checkout = document.querySelector("#div_checkout");
+        const i_checkout = document.querySelector("#checkout");
+        if (checkbox.checked) {
+            div_checkout.style.display = "block";
+            i_checkout.required = true;
+        }
+        
+        else {
+            div_checkout.style.display = "none";
+            i_checkout.required = false;
+
+        };
+
+    };
+
+</script>
+{%endblock%}

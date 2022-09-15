@@ -1,6 +1,22 @@
 {%extends "base.html"%}
-
+<!-- #87cef5; -->
 {%block main%}
+
+{%if apartment%}
+<div class="card text-center bg-success bg-opacity-50" style="width: 30rem;">
+    <img src="https://images.unsplash.com/photo-1519378045141-f05b62faa055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" class="card-img-top" alt="Aquí debería haber la img de una casa">
+    <div class="card-body">
+      <h5 class="card-title">{{apartment.address}}</h5>
+      <p class="card-text">Rooms: {{apartment.rooms}}</p>
+      <div class="d-flex justify-content-evenly">
+        <a href="/roomies" class="btn btn-success">Roomies</a>
+        <a href="/invoices" class="btn btn-primary">Invoices</a>
+      </div>
+    </div>
+</div>
+
+{%else%}
+
 <form method="POST">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Address</label>
@@ -19,17 +35,5 @@
          Create!
     </button>
 </form>
-
-{%if apartment%}
-<div class="card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">apartment.address</h5>
-      <p class="card-text">apartment.rooms</p>
-      <a href="#" class="btn btn-black">Go somewhere</a>
-      <a href="#" class="btn btn-black">Go somewhere</a>
-
-    </div>
-</div>
 {%endif%}
 {%endblock%}
