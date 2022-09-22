@@ -1,0 +1,42 @@
+{%if elements%}
+<table class="table text-light" style="width: 80%;">
+    <thead>
+      <tr>
+    {%for k in elements[0].keys()%}
+        {%if k == "id"%}
+        {%else%}
+        <th scope="col">{{k}}</th>
+        {%endif%}
+    {%endfor%}
+      </tr>
+    </thead>
+    <tbody id="tbody">
+    {%for e in elements%}
+      <tr>
+        {%for field in e.values()%}
+        {%if field is float%}
+        <th scope="row" class="debt_value">{{field}}</th>
+
+        {%else%}
+        <th scope="row">{{field}}</th>
+        {%endif%}
+        {%endfor%}
+      </tr>
+    {%endfor%}
+    </tbody>
+</table>
+<script>
+
+async function button_id(){
+      const tbody = document.querySelector("#tbody");
+      let elements = Array(...tbody.children);
+      elements.forEach((tr) => {
+        let id = tr.children[tr.children.length -1];
+        let url = document.URL.split("/")[document.URL.split("/").length - 1]
+        id.innerHTML = `<a class="btn btn-primary table_button" href="/${url}/${id.innerText}">{{button_text}}</a>`;
+      });
+      };
+      button_id();
+
+</script>
+{%endif%}

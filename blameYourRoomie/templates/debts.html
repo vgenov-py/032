@@ -1,0 +1,32 @@
+{%extends "base.html"%}
+
+{%block main%}
+{%include "card.html"%}
+<div style="width:25%">
+    <div class="accordion mt-5" id="table">
+        <div class="accordion-item ">
+            <h2 class="accordion-header text-light" id="headingOne">
+                <button class="accordion-button bg-warning" type="button" data-bs-toggle="false" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  Debts
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse" aria-labelledby="headingOne" data-bs-parent="#table">
+                <div class="accordion-body bg-success">
+                    {%include "table.html"%}
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+<script>
+    const buttons = document.querySelectorAll(".table_button");
+    buttons.forEach((button) => {
+        button.href = "javascript:;";
+        button.addEventListener("click", () => {
+            // fetch()
+            const URL = document.URL;
+            fetch(URL, {"method" : "POST"}).then((res) => res.json()).then((data) => console.log(data));
+        })
+    });
+</script>
+{%endblock%}

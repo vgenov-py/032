@@ -1,6 +1,6 @@
 {%extends "base.html"%}
 
-{%block main%}
+{%block main_column%}
 <div class="fixed-top mt-5">
     <div class="d-flex justify-content-end mt-5 me-5">
         <button type="button" class="btn btn-success rounded-pill" onclick="show_form_roomie()">
@@ -17,28 +17,28 @@
     </div>
 </div>
 <!-- VITO GENOVESE -->
-
-<table class="table text-light" style="width: 80%;" id="table">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">In</th>
-        <th scope="col">Out</th>
-      </tr>
-    </thead>
-    <tbody>
-{%for roomie in roomies%}
-      <tr>
-        <th scope="row">{{roomie.name}}</th>
-        <td>{{roomie.email}}</td>
-        <td>{{roomie.date_start}}</td>
-        <td>{{roomie.date_end}}</td>
-      </tr>
+<div class="d-flex justify-content-center" id="cards">
+{%for roomie in roomies_checkin%}
+{%include "card.html"%}
 {%endfor%}
-    </tbody>
-</table>
-<form id="form"  style="display: none;" class="text-light" method="post">
+</div>
+<div class="accordion mt-5" id="table">
+    <div class="accordion-item ">
+        <h2 class="accordion-header text-light" id="headingOne">
+            <button class="accordion-button collapsed bg-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              All Roomies
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#table">
+            <div class="accordion-body bg-success">
+                {%include "table.html"%}
+            </div>
+          </div>
+      
+    </div>
+</div>
+
+<form id="form"  style="display: none;" class="text-light mt-5" method="post">
     <div class="mb-2">
         <label for="exampleInputEmail1" class="form-label">Name</label>
         <input type="name" class="form-control" name="name" aria-describedby="textHelp" required>
@@ -66,19 +66,24 @@
     function show_form_roomie() {
         const table = document.querySelector("#table");
         const form = document.querySelector("#form");
+        const cards = document.querySelector("#cards");
         const svg_add = document.querySelector("#svg_add");
         const svg_people = document.querySelector("#svg_people");
+
         if (svg_people.style.display=="none") {
             svg_add.style.display = "none";
             svg_people.style.display = "block";
             table.style.display = "none";
             form.style.display = "block";
+            cards.className = "visually-hidden";
+
         }
         else {
             svg_add.style.display = "block";
             svg_people.style.display = "none";
             table.style.display = "table";
             form.style.display = "none";
+            cards.className = "d-flex justify-content-center";
         }
         ;
         
@@ -100,6 +105,19 @@
         };
 
     };
+
+    function change_debt_red() {
+        const debts = document.querySelectorAll(".debt_value");
+        
+        debts.forEach((debt) => {
+            if ( debt.innerHTML > 0) { 
+                debt.className = "text-danger";
+        };
+        });
+    };
+
+    change_debt_red();
+
 
 </script>
 {%endblock%}

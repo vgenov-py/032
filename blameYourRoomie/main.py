@@ -2,9 +2,10 @@ from flask import Flask
 from db import db
 import os
 from views.byr.routes import byr
-
+from flask_cors import CORS
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     app.config["SECRET_KEY"] = "BYR"
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///byr.db"
     app.register_blueprint(byr)
