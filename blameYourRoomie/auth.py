@@ -1,9 +1,14 @@
-from flask import redirect, url_for
+from flask import redirect, url_for, make_response
 from functools import wraps
 from secrets import token_urlsafe
+from hashlib import sha1
+import werkzeug
 
 class Auth:
-    def __init__(self, session, users, redirect_url, home_url,request, db) -> None:
+    def __init__(self, session: werkzeug.local.LocalProxy, users, redirect_url, home_url,request, db) -> None:
+        '''
+        Session should be flask_session object
+        '''
         self.session = session
         self.users = users
         self.redirect_url = redirect_url
@@ -13,6 +18,7 @@ class Auth:
 
     def auth(self, func):
         @wraps(func)
+
         def inner(*args):
             session_id = self.session.get("id")
             session_token = self.session.get("token")
@@ -27,6 +33,7 @@ class Auth:
     def check(self, func): # SESSION LOG OUT
         @wraps(func)
         def inner(*args):
+            res = make_response(func(*args))
             if self.request.method == "POST":
                 user_email = self.request.form["email"]
                 user_pwd = self.request.form["pwd"]
@@ -37,9 +44,10 @@ class Auth:
                         self.session["id"] = user.id
                         self.session["token"] = user.token
                         self.session["apartment_id"] = user.apartment_id if user.apartment_id else None
-
-                        self.db.session.add(user)
+                        self.db.session.add(user)   
                         self.db.session.commit()
-                        return redirect(url_for(self.home_url))
-            return func(*args)
+                        res = make_response(redirect(url_for(self.home_url)))
+                        res.set_cookie("name", user.name)
+                        return res
+            return res
         return inner

@@ -1,5 +1,3 @@
-from ast import In
-from copy import deepcopy
 from db import db
 from uuid import uuid4
 import datetime as dt
@@ -11,6 +9,30 @@ class Apartment(db.Model):
     rooms = db.Column(db.Integer)
     roomies = db.relationship('Roomie', backref='apartments', lazy=True)
     invoices = db.relationship('Invoice', backref='apartments', lazy=True)
+
+    def private(self):
+        result = {
+            "id": self.id,
+            "address": self.address,
+            "rooms": self.rooms
+            }
+        return result
+
+    def __str__(self):
+        result = {
+            "id": self.id,
+            "address": self.address,
+            "rooms": self.rooms
+            }
+        return f"{result}"
+
+    def __repr__(self):
+        result = {
+            "id": self.id,
+            "address": self.address,
+            "rooms": self.rooms
+            }
+        return f"{result}"
 
     @staticmethod
     def gen_id():
@@ -73,8 +95,6 @@ class Debt(db.Model):
         self.total = total
         self.is_paid = False
 
-    def add_debt(invoice_id: str, roomie_id: str,total: float):
-        return Debt(id=Debt.gen_id(), invoice_id=invoice_id, roomie_id=roomie_id, total=total, is_paid=False)
     
     @property
     def invoice(self):
@@ -131,7 +151,7 @@ class Roomie(db.Model):
         s_l = invoice.date_end if invoice.date_end <= roomie_date_end else roomie_date_end
         if i_l <= s_l:
             interval = (s_l - i_l).days
-            debt = Debt.add_debt(invoice.id, self.id, interval * per_day)
+            debt = Debt(invoice.id, self.id, interval * per_day)
             db.session.add(debt)
             self.debt += debt.total
             db.session.add(self)

@@ -13,12 +13,12 @@
     <tbody id="tbody">
     {%for e in elements%}
       <tr>
-        {%for field in e.values()%}
+        {%for k, field in e.items()%}
         {%if field is float%}
-        <th scope="row" class="debt_value">{{field}}</th>
+        <th scope="row" class="debt_value table_{{k}}">{{field}}</th>
 
         {%else%}
-        <th scope="row">{{field}}</th>
+        <th scope="row" class="table_{{k}}">{{field}}</th>
         {%endif%}
         {%endfor%}
       </tr>
@@ -36,7 +36,26 @@ async function button_id(){
         id.innerHTML = `<a class="btn btn-primary table_button" href="/${url}/${id.innerText}">{{button_text}}</a>`;
       });
       };
-      button_id();
+      // button_id();
 
+      function button_id_2() {
+        const buttons = document.querySelectorAll(".table_id");
+        const is_paids = document.querySelectorAll(".table_is_paid");
+        buttons.forEach((button, i) => {
+
+          let url = document.URL.split("/")[document.URL.split("/").length - 1]
+          button.innerHTML = `<a class="btn btn-primary table_button" href="/${url}/${button.innerText}">{{button_text}}</a>`;
+          if (is_paids.length > 0) {
+          if (is_paids[i].innerText == "True") {
+            button.innerHTML = `<button type="button" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
+              </svg>
+              </button>;`
+          };
+        };
+        });
+      };
+      button_id_2();
 </script>
 {%endif%}

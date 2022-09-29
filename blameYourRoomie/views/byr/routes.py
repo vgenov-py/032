@@ -1,7 +1,10 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for, make_response
 from views.byr.models import db, Apartment, Roomie, Invoice
 import datetime as dt
 from auth import Auth
+import requests as req
+from werkzeug.utils import secure_filename
+import os
 
 byr = Blueprint("byr", __name__)
 test_auth = Auth(session, Roomie, "byr.t_login", "byr.home",  request, db) 
@@ -89,12 +92,16 @@ def t_invoices():
 
 @byr.route("/test")
 def t_test():
+    data = {"success": True}
+    data = make_response(data)
+    data.set_cookie("name", "test1")
+    return data
     # roomies = Roomie.query.all()
     # print(roomies)
     # # print(test_auth.session)
-    to_add = Roomie.add_roomie("test1", "test1@email.com", "1234", dt.date.fromisoformat("2022-01-01"), None)
-    db.session.add(to_add)
-    db.session.commit()
+    # to_add = Roomie.add_roomie("test4", "test4@email.com", "1234", dt.date.fromisoformat("2022-01-01"), None)
+    # db.session.add(to_add)
+    # db.session.commit()
     # roomie = Roomie.query.filter_by(name="test").first()
     # invoice = Invoice.query.first()
     # roomie.calculate_debt(3, invoice)
@@ -103,7 +110,9 @@ def t_test():
 @byr.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('byr.t_login'))
+    res = make_response(redirect(url_for('byr.t_login')))
+    res.delete_cookie("name")
+    return res
 
 @byr.route("/<e>")
 def page_404(e):
